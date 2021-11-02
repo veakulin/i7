@@ -4,9 +4,9 @@
 // Разделил клиента на две части просто чтобы не писать один большой класс
 class VRClientBase {
 
-    private ?Credentials $credentials;
-    private ?string $token;
-    private string $apiUrl;
+    private $credentials;
+    private $token;
+    private $apiUrl;
 
     public function __construct(string $apiUrl, Credentials $credentials = null) {
         $this->token = $this->emptyToken();
@@ -73,10 +73,10 @@ class VRClientBase {
 
     // Отправляет запрос на сервер
     // Получим либо результат, либо исключение
-    private function exec(mixed $jsonRPC) {
+    private function exec(array $jsonRPC) {
         $request = ["http" => ["method" => "POST", "header" => "Content-Type: application/json", "content" => json_encode($jsonRPC)]];
         $context = stream_context_create($request);
-        $response = json_decode(json: file_get_contents($this->apiUrl, false, $context), associative: false);
+        $response = json_decode(file_get_contents($this->apiUrl, false, $context), false);
 
         // Если всё в порядке и есть результат, то возвращаем.
         if (property_exists($response, "result")) {

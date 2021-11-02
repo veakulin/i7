@@ -1,8 +1,8 @@
 <?php
 
 class Credentials {
-    public string $login;
-    public string $password;
+    public $login;
+    public $password;
     
     function __construct(string $login = "", string $password = "") {
         $this->login = $login;

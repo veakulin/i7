@@ -11,10 +11,10 @@
  * @author v
  */
 class Config {
-    public static string $apiUrl = "https://vrdemo.virtreg.ru/vr-api";
-    public static string $apiLogin = "demo";
-    public static string $apiPassword = "demo";
-    public static int $maxLength = 2147483647;
+    public static $apiUrl = "https://vrdemo.virtreg.ru/vr-api";
+    public static $apiLogin = "demo";
+    public static $apiPassword = "demo";
+    public static $maxLength = 2147483647;
     
     private function __construct() {        
     }

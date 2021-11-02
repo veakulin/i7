@@ -3,22 +3,22 @@
 // Хелпер для сбора полей с формы.
 class RegFormState {
 
-    public string $domain;
-    public string $nameLocal;
-    public string $birthday;
-    public string $email;
-    public string $phone;
-    public string $indexLocal;
-    public string $countryLocal;
-    public string $regionLocal;
-    public string $cityLocal;
-    public string $streetLocal;
-    public string $identType;
-    public string $identCountry;
-    public string $identSeries;
-    public string $identNumber;
-    public string $identIssuer;
-    public string $identIssued;
+    public $domain;
+    public $nameLocal;
+    public $birthday;
+    public $email;
+    public $phone;
+    public $indexLocal;
+    public $countryLocal;
+    public $regionLocal;
+    public $cityLocal;
+    public $streetLocal;
+    public $identType;
+    public $identCountry;
+    public $identSeries;
+    public $identNumber;
+    public $identIssuer;
+    public $identIssued;
 
     public function __construct() {
     }

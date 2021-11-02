@@ -2,8 +2,8 @@
 
 class DNSFormState {
 
-    public string $domain;
-    public string $nservers;
+    public $domain;
+    public $nservers;
 
     public function __construct() {
         
