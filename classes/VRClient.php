@@ -2,8 +2,8 @@
 
 class VRClient extends VRClientBase {
     
-    public function __construct(string $apiUrl) {
-        parent::__construct($apiUrl);
+    public function __construct(string $apiUrl, Credentials $credentials) {
+        parent::__construct($apiUrl, $credentials);
     }    
     
     public function countryEnum(array $query = null) {

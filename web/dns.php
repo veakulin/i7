@@ -1,12 +1,11 @@
 <?php
 require_once '../classes.php';
 
-$vrClient = new VRClient(Config::$apiUrl);
+$vrClient = new VRClient(Config::$apiUrl, new Credentials(Config::$apiLogin, Config::$apiPassword));
 
 $isPost = $_SERVER["REQUEST_METHOD"] === 'POST';
 
 if ($isPost) {
-    $vrClient->login(Config::$apiLogin, Config::$apiPassword);
     $formState = new DNSFormState();
     $formState->fill($_POST);
     $domain = $vrClient->domainEnum(["filter" => ["&", ["name", "=", $formState->domain], ["isDeleted", "=", false]]]);

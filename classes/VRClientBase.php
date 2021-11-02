@@ -4,30 +4,33 @@
 // Разделил клиента на две части просто чтобы не писать один большой класс
 class VRClientBase {
 
+    private ?Credentials $credentials;
     private ?string $token;
     private string $apiUrl;
 
-    public function __construct(string $apiUrl) {
-        $this->token = null;
+    public function __construct(string $apiUrl, Credentials $credentials = null) {
+        $this->token = $this->emptyToken();
         $this->apiUrl = $apiUrl;
+        $this->credentials = is_null($credentials) ? new Credentials() : $credentials;
     }
 
     // Вход
-    public function login(string $login, string $password) {
+    public function login(Credentials $credentials) {
         $jsonRPC = $this->blankJsonRPC("authLogin");
-        $jsonRPC["params"]["login"] = $login;
-        $jsonRPC["params"]["password"] = $password;
+        $jsonRPC["params"]["login"] = $credentials->login;
+        $jsonRPC["params"]["password"] = $credentials->password;
         $result = $this->exec($jsonRPC);
         $this->token = $result->result->token;
+        $this->credentials = $credentials;
     }
 
     // Выход
     public function logout() {
-        if (!is_null($this->token)) {
+        if ($this->token) {
             $jsonRPC = $this->blankJsonRPC("authLogout");
             $jsonRPC["params"] = ["auth" => ["token" => $this->token]];
             $this->exec($jsonRPC);
-            $this->token = null;
+            $this->token = $this->emptyToken();
         }
     }
 
@@ -90,10 +93,21 @@ class VRClientBase {
         throw new VRAPIException($message);
     }
 
+    private function emptyToken() {
+        return "";
+    }
+    
+    private function getToken() {
+        if ($this->token == $this->emptyToken()) {
+            $this->login($this->credentials);
+        }
+        return $this->token;
+    }
+
     // Подготавливает заготовку JSON-RPC с токеном 
     private function authenticatedJsonRPC(string $method, string $id = "1", string $version = "2.0") {
         $jsonRPC = $this->blankJsonRPC($method, $id, $version);
-        $jsonRPC["params"]["auth"] = ["token" => $this->token];
+        $jsonRPC["params"]["auth"] = ["token" => $this->getToken()];
         return $jsonRPC;
     }
 
